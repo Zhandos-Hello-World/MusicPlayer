@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="teal_200">#FF000000</color>
+    <color name="teal_700">#FF000000</color>
     <color name="black">#FF000000</color>
 
 
 
-    <color name="startColorW">#4188FF</color>
-    <color name="startColorD">#2926CE</color>
+    <color name="startColorW">#FF000000</color>
+    <color name="startColorD">#FF000000</color>
 
-    <color name="varStartW">#4188FF</color>
-    <color name="varStartD">#2D48CE</color>
+    <color name="varStartW">#FF000000</color>
+    <color name="varStartD">#FF000000</color>
 </resources>

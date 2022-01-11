@@ -1,10 +1,8 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.media.MediaController2
 import android.media.MediaPlayer
-import android.media.session.MediaController
-import android.media.session.MediaSession
+import android.widget.SeekBar
 
 
 object CurrentMusic {
@@ -45,20 +43,26 @@ object CurrentMusic {
         R.raw.music29,
         R.raw.music30)
     var media: MediaPlayer? = null
+    @JvmStatic
     var id: Int = 0
     set (value) {
         if (value < 0) {
             field = countryList.size - 1
         }
+        else if (value >= raws.size - 1) {
+            field = 0
+        }
         else {
             field = value
         }
     }
+    private var duration:Long = -1
 
+
+    @JvmStatic
     fun name() = countryList[id]
-
-
-    fun playMusic(context: Context) {
+    @JvmStatic
+    fun playMusic(context: Context, seekbar: SeekBar? = null) {
         if (media != null) {
             media?.stop()
         }
@@ -66,16 +70,16 @@ object CurrentMusic {
         media?.start()
 
     }
+    @JvmStatic
     fun pause() {
         if (media != null) {
             media?.pause()
         }
     }
+    @JvmStatic
     fun play() {
         if (media != null) {
             media?.start()
         }
     }
-
-
 }

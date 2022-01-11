@@ -1,16 +1,16 @@
 package com.example.myapplication
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 
 import androidx.core.view.isGone
-
-
-
-
 
 
 class ListMusicController:AppCompatActivity() {
@@ -21,6 +21,8 @@ class ListMusicController:AppCompatActivity() {
     lateinit var next: ImageButton
     lateinit var current: TextView
     lateinit var mini_controller: LinearLayout
+    lateinit var seekBar: SeekBar
+    lateinit var show: Button
     private var play = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,29 +32,27 @@ class ListMusicController:AppCompatActivity() {
 
 
         mini_controller.isGone = true
-        mini_controller.setOnClickListener {
-            startActivity(Intent(this, MusicController::class.java))
-        }
 
 
         listView.adapter = ArrayAdapter(this, R.layout.activity_listview, R.id.name_music, CurrentMusic.countryList)
         listView.setOnItemClickListener{ parent, v, position, id ->
-            Log.d("selected item", "$id")
             CurrentMusic.id = id.toInt()
-            current.setText(CurrentMusic.name())
-            CurrentMusic.playMusic(this)
+            current.text = CurrentMusic.name()
+            CurrentMusic.playMusic(this, seekBar)
             mini_controller.isGone = false
             play = true
         }
 
         next.setOnClickListener {
             CurrentMusic.id += 1
-            CurrentMusic.playMusic(this)
+            CurrentMusic.playMusic(this, seekBar)
+            current.text = CurrentMusic.name()
         }
 
         previous.setOnClickListener {
             CurrentMusic.id -= 1
-            CurrentMusic.playMusic(this)
+            CurrentMusic.playMusic(this, seekBar)
+            current.text = CurrentMusic.name()
         }
 
         playBtn.setOnClickListener {
@@ -61,6 +61,10 @@ class ListMusicController:AppCompatActivity() {
         stopBtn.setOnClickListener {
             CurrentMusic.pause()
         }
+        show.setOnClickListener {
+            startActivity(Intent(this, MusicController::class.java))
+        }
+        mini_controller.setOnClickListener {  }
     }
 
     private fun init() {
@@ -71,6 +75,13 @@ class ListMusicController:AppCompatActivity() {
         playBtn = findViewById(R.id.startBtn)
         stopBtn = findViewById(R.id.stopBtn)
         mini_controller = findViewById(R.id.mini_controller)
+        show = findViewById(R.id.show)
         mini_controller.isGone = true
+        seekBar = findViewById(R.id.seekbar)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        listView.setSelection(CurrentMusic.id)
     }
 }
