@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/startColorD">
+    android:orientation="vertical"
+    android:background="@color/startColorD"
+    android:id="@+id/body">
 
 
     <ListView
@@ -13,87 +13,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/list_view"
         android:divider="@null"
-        android:listSelector="#2321B3"/>
+        android:listSelector="@color/selected"/>
 
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <fragment
         android:layout_gravity="bottom"
-        android:background="@drawable/shape"
-        android:id="@+id/mini_controller"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="15sp"
-            android:layout_marginTop="10sp">
-
-            <TextView
-                android:id="@+id/current"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:text="Подробнее"
-                android:id="@+id/show"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <SeekBar
-            android:id="@+id/seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="40sp">
-
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/forward_button"
-                android:rotation="180"
-                tools:ignore="ContentDescription"
-                android:id="@+id/previous"/>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/play_button"
-                tools:ignore="ContentDescription"
-                android:id="@+id/startBtn"/>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/pause"
-                tools:ignore="ContentDescription"
-                android:id="@+id/stopBtn"/>
-
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/forward_button"
-                tools:ignore="ContentDescription"
-                android:id="@+id/next"/>
-        </LinearLayout>
-    </LinearLayout>
+        android:name="com.example.myapplication.MusicControllerFragment"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_controller" />
 </FrameLayout>

@@ -1,88 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_color"
-    >
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/banner"
+        android:layout_width="418dp"
+        android:layout_height="344dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/gruppa_kino"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/banner"
-            android:layout_height="0dp"
-            android:layout_width="match_parent"
-            android:src="@drawable/eqx0672n_my"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:adjustViewBounds="true"
-            />
-<!--        Градиент нужно сделать чтобы с фоткой сочетался -->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/current"
+        android:text=""
+        app:layout_constraintStart_toStartOf="@id/banner"
+        app:layout_constraintEnd_toEndOf="@id/banner"
+        app:layout_constraintTop_toBottomOf="@id/banner"
+        android:textColor="@color/black"/>
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/banner"
+        app:layout_constraintEnd_toEndOf="@id/banner"
+        app:layout_constraintTop_toBottomOf="@id/current"
+        android:layout_marginTop="16dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/controller"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@id/banner"
+        app:layout_constraintStart_toStartOf="@id/banner"
+        app:layout_constraintTop_toBottomOf="@id/seekbar">
+
+        <ImageButton
+            android:id="@+id/previous"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/forward_button_black"
+            android:rotation="180" />
+
+        <ImageButton
+            android:id="@+id/play"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/play_buttonblack" />
+
+        <ImageButton
+            android:id="@+id/stopBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/pauseblack" />
+
+        <ImageButton
+            android:id="@+id/next"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/forward_button_black" />
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/current"
-            android:text=""
-            app:layout_constraintStart_toStartOf="@id/banner"
-            app:layout_constraintEnd_toEndOf="@id/banner"
-            app:layout_constraintTop_toBottomOf="@id/banner"
-            android:textColor="@color/black"/>
-        <SeekBar
-            android:id="@+id/seekbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/banner"
-            app:layout_constraintEnd_toEndOf="@id/banner"
-            app:layout_constraintTop_toBottomOf="@id/current"
-            android:layout_marginTop="16dp"
-            />
-
-        <LinearLayout
-            android:id="@+id/controller"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="@id/banner"
-            app:layout_constraintStart_toStartOf="@id/banner"
-            app:layout_constraintTop_toBottomOf="@id/seekbar">
-
-            <ImageButton
-                android:id="@+id/previous"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/forward_button"
-                android:rotation="180" />
-
-            <ImageButton
-                android:id="@+id/play"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/play_button" />
-
-            <ImageButton
-                android:id="@+id/stopBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/pause" />
-
-            <ImageButton
-                android:id="@+id/next"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/forward_button" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</ScrollView>

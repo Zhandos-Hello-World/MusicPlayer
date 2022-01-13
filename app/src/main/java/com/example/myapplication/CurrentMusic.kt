@@ -56,7 +56,7 @@ object CurrentMusic {
             field = value
         }
     }
-    private var duration:Long = -1
+    private var duration:Int = -1
 
 
     @JvmStatic
@@ -68,7 +68,11 @@ object CurrentMusic {
         }
         media = MediaPlayer.create(context, raws[id])
         media?.start()
+        duration = media!!.duration
 
+        if (seekbar != null) {
+            seekbar.max = duration
+        }
     }
     @JvmStatic
     fun pause() {
