@@ -5,10 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 
 
-class ListMusicController:AppCompatActivity(){
+class ListMusicController : AppCompatActivity() {
     lateinit var listView: ListView
     private var play = false
 
@@ -22,6 +21,8 @@ class ListMusicController:AppCompatActivity(){
         listView.adapter = ArrayAdapter(this, R.layout.activity_listview, R.id.name_music, CurrentMusic.countryList)
         listView.setOnItemClickListener{ parent, v, position, id ->
             CurrentMusic.id = id.toInt()
+            CurrentMusic.playMusic(this, null)
+            MusicControllerFragment.change_name()
             play = true
         }
     }

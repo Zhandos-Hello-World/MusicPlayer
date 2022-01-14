@@ -13,7 +13,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/list_view"
         android:divider="@null"
-        android:listSelector="@color/selected"/>
+        android:listSelector="@color/selected"
+        android:layout_marginBottom="130dp"
+        />
 
     <fragment
         android:layout_gravity="bottom"

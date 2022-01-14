@@ -1,10 +1,14 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
 import android.widget.SeekBar
 
 
+@SuppressLint("StaticFieldLeak")
 object CurrentMusic {
     var countryList = arrayOf("Мама, мы все тяжело больны", "Группа крови", "В наших глазах", "Место для шага вперед", "Кукушка", "Песня без слов",
         "Попробуй спеть вместе со мной", "Стук", "Спокойная ночь", "Звезда по имени Солнце", "Это не любовь", "Музыка волн",
@@ -57,7 +61,8 @@ object CurrentMusic {
         }
     }
     private var duration:Int = -1
-
+    private var task: Runnable? = null
+    private val handler = Handler(Looper.myLooper()!!)
 
     @JvmStatic
     fun name() = countryList[id]
@@ -70,10 +75,60 @@ object CurrentMusic {
         media?.start()
         duration = media!!.duration
 
-        if (seekbar != null) {
-            seekbar.max = duration
+        task = object : Runnable {
+            override fun run() {
+                try {
+                    seekbar?.progress = media!!.currentPosition
+                    handler.postDelayed(this, 1000)
+                }
+                catch (ex: Exception) {
+                    seekbar!!.progress = 0
+                }
+            }
         }
+        initializeSeekBar(seekbar)
     }
+    @JvmStatic
+    fun initializeSeekBar(seekbar: SeekBar?) {
+        seekbar?.max = media?.duration?:0
+
+        seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    media?.seekTo(progress)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+        })
+
+        task = object : Runnable {
+            override fun run() {
+                try {
+                    seekbar?.progress = media!!.currentPosition
+                    handler.postDelayed(this, 1000)
+                }
+                catch (ex: Exception) {
+                    seekbar!!.progress = 0
+                }
+            }
+        }
+        handler.post(task!!)
+    }
+
+    @JvmStatic
+    fun isPlaying() = media?.isPlaying ?: false
+
+    @JvmStatic
+    fun duration() = media!!.duration
+
+    @JvmStatic
+    fun initialized() = media != null
+
     @JvmStatic
     fun pause() {
         if (media != null) {
