@@ -1,37 +1,72 @@
 package com.example.myapplication
 
-
-import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 
 class ListMusicController : AppCompatActivity() {
-    lateinit var listView: ListView
-    private var play = false
+    private lateinit var listView: ListView
+    private var favourite_btn: ImageButton? = null
+    private var play_btn:ImageButton? = null
+    private var name_music_current:TextView? = null
+    private var favourite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_music_acitvity)
 
         listView = findViewById(R.id.list_view)
+        name_music_current = findViewById(R.id.name_music)
+        play_btn = findViewById(R.id.play_btn)
+        favourite_btn = findViewById(R.id.favourite_btn)
 
 
-        listView.adapter = ArrayAdapter(this, R.layout.activity_listview, R.id.name_music, CurrentMusic.countryList)
+        listView.adapter = ArrayAdapter(this, R.layout.list_component, R.id.name_music, CurrentMusic.namesOfMusics)
         listView.setOnItemClickListener{ parent, v, position, id ->
             CurrentMusic.id = id.toInt()
-            CurrentMusic.playMusic(this, null)
-            MusicControllerFragment.change_name()
-            play = true
+            CurrentMusic.startMusic(this, null)
+            current()
+        }
+        play_btn?.setOnClickListener {
+            if (CurrentMusic.isPlaying()) {
+                CurrentMusic.pause()
+                play_btn?.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24_white)
+            }
+            else {
+                if (!CurrentMusic.initialized()) {
+                    CurrentMusic.startMusic(this, null)
+                }
+                else {
+                    CurrentMusic.play()
+                }
+                play_btn?.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white)
+            }
+        }
+        favourite_btn?.setOnClickListener {
+            favourite = if (favourite) {
+                favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
+                false
+            }
+            else {
+                favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24_white)
+                true
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        listView.setSelection(CurrentMusic.id)
+        current()
     }
-    fun onClickArrow(view: android.view.View) {
-        startActivity(Intent(this, MusicController::class.java))
+
+    private fun current() {
+        if (CurrentMusic.isPlaying()) {
+            play_btn?.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white)
+        }
+        else {
+            play_btn?.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24_white)
+        }
+        name_music_current?.text = CurrentMusic.currentNameOfMusic()
     }
 }

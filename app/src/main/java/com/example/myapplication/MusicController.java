@@ -17,18 +17,24 @@ public class MusicController extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.music_controller);
-        init();
+        setContentView(R.layout.music_controller_activity);
 
 
-        current.setText(CurrentMusic.name());
+        current = findViewById(R.id.current);
+        seekBar = findViewById(R.id.seekbar);
+        previous = findViewById(R.id.previous);
+        play = findViewById(R.id.play);
+        next = findViewById(R.id.next);
+
+
+        current.setText(CurrentMusic.currentNameOfMusic());
 
         previous.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() - 1);
-            CurrentMusic.playMusic(this, seekBar);
-            current.setText(CurrentMusic.name());
+            CurrentMusic.startMusic(this, seekBar);
+            current.setText(CurrentMusic.currentNameOfMusic());
             if (!CurrentMusic.initialized()) {
-                CurrentMusic.playMusic(this, seekBar);
+                CurrentMusic.startMusic(this, seekBar);
             }
             else {
                 CurrentMusic.play();
@@ -38,10 +44,10 @@ public class MusicController extends AppCompatActivity {
 
         next.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() + 1);
-            CurrentMusic.playMusic(this, seekBar);
-            current.setText(CurrentMusic.name() );
+            CurrentMusic.startMusic(this, seekBar);
+            current.setText(CurrentMusic.currentNameOfMusic() );
             if (!CurrentMusic.initialized()) {
-                CurrentMusic.playMusic(this, seekBar);
+                CurrentMusic.startMusic(this, seekBar);
             }
             else {
                 CurrentMusic.play();
@@ -52,7 +58,7 @@ public class MusicController extends AppCompatActivity {
         play.setOnClickListener(key -> {
             if (!CurrentMusic.initialized()) {
                 play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
-                CurrentMusic.playMusic(this, seekBar);
+                CurrentMusic.startMusic(this, seekBar);
             }
             else {
                 if (CurrentMusic.isPlaying()) {
@@ -65,13 +71,6 @@ public class MusicController extends AppCompatActivity {
                 }
             }
         });
-    }
-    private void init() {
-        current = findViewById(R.id.current);
-        seekBar = findViewById(R.id.seekbar);
-        previous = findViewById(R.id.previous);
-        play = findViewById(R.id.play);
-        next = findViewById(R.id.next);
     }
     @Override
     protected void onStart() {

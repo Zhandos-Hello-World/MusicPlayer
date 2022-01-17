@@ -10,7 +10,7 @@ import android.widget.SeekBar
 
 @SuppressLint("StaticFieldLeak")
 object CurrentMusic {
-    var countryList = arrayOf("Мама, мы все тяжело больны", "Группа крови", "В наших глазах", "Место для шага вперед", "Кукушка", "Песня без слов",
+    var namesOfMusics = arrayOf("Мама, мы все тяжело больны", "Группа крови", "В наших глазах", "Место для шага вперед", "Кукушка", "Песня без слов",
         "Попробуй спеть вместе со мной", "Стук", "Спокойная ночь", "Звезда по имени Солнце", "Это не любовь", "Музыка волн",
         "Бездельник", "Мы хотим танцевать", "Пачка сигарет", "Сказка", "Война", "Дальше действовать будем мы", "Мама анархия", "Прохожий", "Время есть а денег нет", "Троллейбус", "Невесёлая песня", "Когда твоя девушка больна", "Электричка", "Стук", "Нам с тобой", "Бошетунмай",
         "Следи за собой", "Скоро кончится лето")
@@ -50,31 +50,30 @@ object CurrentMusic {
     @JvmStatic
     var id: Int = 0
     set (value) {
-        if (value < 0) {
-            field = countryList.size - 1
-        }
-        else if (value >= raws.size - 1) {
-            field = 0
-        }
-        else {
-            field = value
+        field = when {
+            value < 0 -> {
+                namesOfMusics.size - 1
+            }
+            value >= raws.size - 1 -> {
+                0
+            }
+            else -> {
+                value
+            }
         }
     }
-    private var duration:Int = -1
     private var task: Runnable? = null
     private val handler = Handler(Looper.myLooper()!!)
 
     @JvmStatic
-    fun name() = countryList[id]
+    fun currentNameOfMusic() = namesOfMusics[id]
     @JvmStatic
-    fun playMusic(context: Context, seekbar: SeekBar? = null) {
+    fun startMusic(context: Context, seekbar: SeekBar? = null) {
         if (media != null) {
             media?.stop()
         }
         media = MediaPlayer.create(context, raws[id])
         media?.start()
-        duration = media!!.duration
-
         task = object : Runnable {
             override fun run() {
                 try {
@@ -123,8 +122,6 @@ object CurrentMusic {
     @JvmStatic
     fun isPlaying() = media?.isPlaying ?: false
 
-    @JvmStatic
-    fun duration() = media!!.duration
 
     @JvmStatic
     fun initialized() = media != null
