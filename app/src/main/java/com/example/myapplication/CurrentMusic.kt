@@ -73,6 +73,11 @@ object CurrentMusic {
             media?.stop()
         }
         media = MediaPlayer.create(context, raws[id])
+        media!!.setOnCompletionListener{
+            media = MediaPlayer.create(context, raws[++id])
+            media?.start()
+        }
+
         media?.start()
         task = object : Runnable {
             override fun run() {

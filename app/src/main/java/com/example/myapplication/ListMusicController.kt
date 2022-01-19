@@ -80,6 +80,12 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
         startActivity(Intent(this, MusicController::class.java))
     }
 
+    override fun selected(id: Int) {
+        CurrentMusic.id = id
+        CurrentMusic.startMusic(this, null)
+        current()
+    }
+
     private class SectionsPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm!!) {
 
         override fun getCount() = 2
@@ -98,9 +104,4 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
         }
     }
 
-    override fun selected(id: Int) {
-        CurrentMusic.id = id
-        CurrentMusic.startMusic(this, null)
-        current()
-    }
 }

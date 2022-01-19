@@ -11,7 +11,7 @@ abstract class MusicParentListFragment:ListFragment() {
             fun selected(id: Int)
         }
     }
-    protected var listener: Listener? = null
+    private var listener: Listener? = null
 
 
     override fun onAttach(context: Context) {
