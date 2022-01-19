@@ -1,119 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/startColorD"
-    android:id="@+id/body">
+    android:orientation="vertical">
 
-
-    <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_view"
-        android:divider="@null"
-        android:listSelector="@color/selected"
-        android:layout_marginBottom="130dp"
-        />
-    <FrameLayout
-        android:layout_height="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:clickable="true"
-        android:layout_gravity="bottom">
-        <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/startColorD">
+
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pager"
+            android:divider="@null"
+            android:listSelector="@color/selected"
+            android:layout_marginBottom="130dp"/>
+
+        <FrameLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:clickable="true"
-            android:orientation="vertical"
-            tools:context=".ListMusicController"
-            tools:ignore="UselessParent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_baseline_keyboard_arrow_up_24_white"
-                tools:ignore="ContentDescription"
-                android:onClick="onClickArrow"
-                />
-
+            android:layout_gravity="bottom">
             <LinearLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:background="@drawable/shape"
+                android:clickable="true"
+                android:orientation="vertical"
+                tools:context=".ListMusicController"
+                tools:ignore="UselessParent">
 
-                <com.google.android.material.imageview.ShapeableImageView
+                <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/disk"
-                    app:shapeAppearanceOverlay="@style/Corner" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_up_24_white"
+                    tools:ignore="ContentDescription"
+                    android:onClick="onClickArrow"
+                    />
 
-                    <TextView
-                        android:id="@+id/name_music"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="wrap_content"
+                        android:layout_height="80dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/disk"
+                        app:shapeAppearanceOverlay="@style/Corner" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginTop="0dp"
-                        android:text="Группа крови"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/favourite_btn"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constrainedWidth="true"
-                        />
+                        android:orientation="vertical"
+                        android:layout_weight="1">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:text="Виктор Цой"
-                        android:textColor="@color/white"
-                        android:textSize="12sp"
+                        <TextView
+                            android:id="@+id/name_music"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginTop="0dp"
+                            android:text="Группа крови"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/favourite_btn"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constrainedWidth="true"
+                            />
 
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/name_music"
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="Виктор Цой"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
 
-                    <ImageButton
-                        android:id="@+id/favourite_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:padding="16dp"
-                        android:background="@drawable/ic_baseline_favorite_border_24_white"
-                        app:layout_constraintEnd_toStartOf="@id/play_btn"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/name_music"
+                            />
 
-                    <ImageButton
-                        android:id="@+id/play_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:padding="16dp"
-                        android:background="@drawable/ic_baseline_play_arrow_24_white"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <ImageButton
+                            android:id="@+id/favourite_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:padding="16dp"
+                            android:background="@drawable/ic_baseline_favorite_border_24_white"
+                            app:layout_constraintEnd_toStartOf="@id/play_btn"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/play_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:padding="16dp"
+                            android:background="@drawable/ic_baseline_play_arrow_24_white"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </FrameLayout>
     </FrameLayout>
-</FrameLayout>
+</LinearLayout>
+

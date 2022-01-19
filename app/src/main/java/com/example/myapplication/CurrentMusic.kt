@@ -138,4 +138,6 @@ object CurrentMusic {
             media?.start()
         }
     }
+    @JvmStatic
+    fun size() = namesOfMusics.size
 }
