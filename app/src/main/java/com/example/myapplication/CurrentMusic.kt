@@ -1,16 +1,15 @@
 package com.example.myapplication
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.SeekBar
 
 
-@SuppressLint("StaticFieldLeak")
 object CurrentMusic {
-    var namesOfMusics = arrayOf("Мама, мы все тяжело больны", "Группа крови", "В наших глазах", "Место для шага вперед", "Кукушка", "Песня без слов",
+    val namesOfMusics = arrayOf("Мама, мы все тяжело больны", "Группа крови", "В наших глазах", "Место для шага вперед", "Кукушка", "Песня без слов",
         "Попробуй спеть вместе со мной", "Стук", "Спокойная ночь", "Звезда по имени Солнце", "Это не любовь", "Музыка волн",
         "Бездельник", "Мы хотим танцевать", "Пачка сигарет", "Сказка", "Война", "Дальше действовать будем мы", "Мама анархия", "Прохожий", "Время есть а денег нет", "Троллейбус", "Невесёлая песня", "Когда твоя девушка больна", "Электричка", "Стук", "Нам с тобой", "Бошетунмай",
         "Следи за собой", "Скоро кончится лето")
@@ -64,18 +63,28 @@ object CurrentMusic {
     }
     private var task: Runnable? = null
     private val handler = Handler(Looper.myLooper()!!)
+    private var subject: MusicDataRepository? = null
 
     @JvmStatic
     fun currentNameOfMusic() = namesOfMusics[id]
     @JvmStatic
     fun startMusic(context: Context, seekbar: SeekBar? = null) {
+        if (subject == null) {
+            subject = MusicDataRepository.getINSTANCE()
+        }
+        if (context is RepositoryObserver) {
+            subject!!.registerObserver(context)
+        }
         if (media != null) {
             media?.stop()
         }
         media = MediaPlayer.create(context, raws[id])
         media!!.setOnCompletionListener{
+            Log.println(Log.INFO, "Changed", "true")
             media = MediaPlayer.create(context, raws[++id])
             media?.start()
+            subject?.setUserData(namesOfMusics[id], id)
+            subject?.notifyObserver()
         }
 
         media?.start()

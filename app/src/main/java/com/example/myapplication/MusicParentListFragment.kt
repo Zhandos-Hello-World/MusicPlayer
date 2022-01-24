@@ -18,6 +18,10 @@ abstract class MusicParentListFragment:ListFragment() {
         listener = context as Listener
         super.onAttach(context)
     }
+    override fun onStart() {
+        listView.dividerHeight = 0
+        super.onStart()
+    }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
         listener?.selected(id.toInt())

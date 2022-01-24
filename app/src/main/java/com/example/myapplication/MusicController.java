@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MusicController extends AppCompatActivity {
+public class MusicController extends AppCompatActivity implements RepositoryObserver {
     private TextView current;
     private SeekBar seekBar;
     private ImageButton previous;
@@ -114,5 +114,11 @@ public class MusicController extends AppCompatActivity {
             }
         }
         super.onResume();
+    }
+
+    @Override
+    public void onUserDataChanged(String music_name, int music_id) {
+        current.setText(CurrentMusic.currentNameOfMusic());
+
     }
 }

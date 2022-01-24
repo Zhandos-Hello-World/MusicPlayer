@@ -2,17 +2,17 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
 
-class ListMusicController : AppCompatActivity(), MusicParentListFragment.Companion.Listener {
+class ListMusicController : AppCompatActivity(), MusicParentListFragment.Companion.Listener, RepositoryObserver {
     private var favourite_btn: ImageButton? = null
     private var play_btn:ImageButton? = null
     private var name_music_current: TextView? = null
@@ -104,4 +104,7 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
         }
     }
 
+    override fun onUserDataChanged(music_name: String?, music_id: Int) {
+        name_music_current?.text = CurrentMusic.namesOfMusics[music_id]
+    }
 }
