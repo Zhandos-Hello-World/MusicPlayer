@@ -2,20 +2,20 @@ package com.example.myapplication;
 
 import java.util.ArrayList;
 
-public class MusicDataRepository implements Subject{
+public class MusicObservableDataRepository implements Subject{
     private String music_name;
     private int music_id;
-    private static MusicDataRepository INSTANCE;
+    private static MusicObservableDataRepository INSTANCE;
 
     private ArrayList<RepositoryObserver> mObserver;
 
-    public MusicDataRepository() {
+    public MusicObservableDataRepository() {
         mObserver = new ArrayList<>();
     }
 
-    public static MusicDataRepository getINSTANCE() {
+    public static MusicObservableDataRepository getINSTANCE() {
         if (INSTANCE == null) {
-            INSTANCE = new MusicDataRepository();
+            INSTANCE = new MusicObservableDataRepository();
         }
         return INSTANCE;
     }

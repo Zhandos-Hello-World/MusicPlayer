@@ -2,9 +2,11 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -20,6 +22,8 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CurrentMusic.init(this)
+
         setContentView(R.layout.list_music_acitvity)
 
         name_music_current = findViewById(R.id.name_music)
@@ -51,13 +55,15 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
         }
         favourite_btn?.setOnClickListener {
             favourite = if (favourite) {
-                favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
+                favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24_white)
                 false
             }
             else {
-                favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24_white)
+                favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
                 true
             }
+            Log.d("Install", "Favourite")
+            CurrentMusic.setCurrentFavouriteMusic(favourite)
         }
     }
 
@@ -74,6 +80,16 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
             play_btn?.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24_white)
         }
         name_music_current?.text = CurrentMusic.currentNameOfMusic()
+
+        favourite = CurrentMusic.currentIsFavouriteOfMusic()
+
+        if (favourite) {
+            favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
+        }
+        else {
+            favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24_white)
+        }
+
     }
 
     fun onClickArrow(view: View) {
@@ -102,6 +118,13 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
             }
             return super.getPageTitle(position)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.d("Destroyed", "true")
+        Toast.makeText(this, "hELLO", Toast.LENGTH_LONG).show()
+        CurrentMusic.save(this)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onUserDataChanged(music_name: String?, music_id: Int) {
