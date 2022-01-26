@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteException
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
 
@@ -13,6 +14,16 @@ import android.widget.Toast
 object CurrentMusic {
     val namesOfMusics = mutableListOf<String>()
     private val raws = mutableListOf<Int>()
+    private var rawsFavourite = mutableListOf<Int>()
+    get() {
+        field.clear()
+        for (i in raws.indices) {
+            if (favourite[i]) {
+                field.add(raws[i])
+            }
+        }
+        return field
+    }
     private val favourite = mutableListOf<Boolean>()
     val favouriteMusicList = mutableListOf<String>()
         get() {
@@ -24,9 +35,8 @@ object CurrentMusic {
             }
             return field
         }
-
-
     var media: MediaPlayer? = null
+    var favouritePage = false
     @JvmStatic
     var id: Int = 0
     set (value) {
@@ -47,21 +57,51 @@ object CurrentMusic {
     private var subject: MusicObservableDataRepository? = null
 
     @JvmStatic
-    fun currentNameOfMusic() = if (id in namesOfMusics.indices) namesOfMusics[id] else "NULL"
+    fun currentNameOfMusic() : String {
+        Log.d("Favourite page ?", favouritePage.toString())
+        return if (favouritePage) {
+            if (id in favouriteMusicList.indices)
+                favouriteMusicList[id]
+            else
+                "NULL"
+        }
+        else {
+            namesOfMusics[id]
+        }
+    }
 
     @JvmStatic
-    fun currentIsFavouriteOfMusic() = if (id in favourite.indices) favourite[id] else false
+    fun currentIsFavouriteOfMusic(): Boolean {
+        return if (favouritePage) {
+            true
+        } else {
+            if (id in favourite.indices)
+                favourite[id]
+            else
+                false
+        }
+    }
 
-    @JvmStatic
-    fun getFavouriteOfMusic(id: Int) = if (id in favourite.indices) favourite[id] else false
 
 
     @JvmStatic
     fun setCurrentFavouriteMusic(newFavourite: Boolean) {
-        favourite[id] = newFavourite
+        if (favouritePage) {
+            var temp = 0
+            for (i in favourite.indices) {
+                if (favourite[i]) {
+                    if (temp == id) {
+                        favourite[temp] = false
+                        break
+                    }
+                    temp++
+                }
+            }
+        }
+        else {
+            favourite[id] = newFavourite
+        }
     }
-
-
 
     @JvmStatic
     fun startMusic(context: Context, seekbar: SeekBar? = null) {
@@ -79,16 +119,27 @@ object CurrentMusic {
         }
 
         //Initializing media and connect next music if current is ended
-        media = MediaPlayer.create(context, raws[id])
+        if (!favouritePage) {
+            media = MediaPlayer.create(context, raws[id])
+        }
+        else {
+            media = MediaPlayer.create(context, rawsFavourite[id])
+        }
         media!!.setOnCompletionListener{
-            media = MediaPlayer.create(context, raws[++id])
-            media?.start()
-            subject?.setUserData(namesOfMusics[id], id)
-            subject?.notifyObserver()
+            if (favouritePage) {
+                //Todo
+            }
+            else {
+                media = MediaPlayer.create(context, raws[++id])
+                media?.start()
+                subject?.setUserData(namesOfMusics[id], id)
+                subject?.notifyObserver()
+            }
         }
 
         //start
         media?.start()
+
         //if layout has seekbar
         if (seekbar != null) {
             initializeSeekBar(seekbar)

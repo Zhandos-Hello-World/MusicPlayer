@@ -8,6 +8,13 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 
 class FavouriteListFragment : MusicParentListFragment() {
+    fun update() {
+        val adapter = ArrayAdapter(layoutInflater.context, R.layout.list_component, R.id.name_music,
+            CurrentMusic.favouriteMusicList)
+        listAdapter = adapter
+
+        Toast.makeText(layoutInflater.context, "UPDATED", Toast.LENGTH_SHORT).show()
+    }
 
 
     override fun onCreateView(
@@ -24,12 +31,4 @@ class FavouriteListFragment : MusicParentListFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onResume() {
-        val adapter = ArrayAdapter(layoutInflater.context, R.layout.list_component, R.id.name_music,
-            CurrentMusic.favouriteMusicList)
-        listAdapter = adapter
-        Toast.makeText(view?.context, "Hello", Toast.LENGTH_LONG).show()
-
-        super.onResume()
-    }
 }

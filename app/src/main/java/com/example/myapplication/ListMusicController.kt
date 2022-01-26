@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.google.android.material.tabs.TabLayout
 
 
@@ -23,7 +24,6 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         CurrentMusic.init(this)
-
         setContentView(R.layout.list_music_acitvity)
 
         name_music_current = findViewById(R.id.name_music)
@@ -37,6 +37,23 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
 
         val tabLayout = findViewById<TabLayout>(R.id.tabs)
         tabLayout.setupWithViewPager(pager)
+
+        pager.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                Log.d("onPageSelected1", "true")
+                Log.d("onPageSelected1", position.toString())
+                CurrentMusic.favouritePage = position == 1
+            }
+
+            override fun onPageSelected(position: Int) {
+            }
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+        })
 
         play_btn?.setOnClickListener {
             if (CurrentMusic.isPlaying()) {
@@ -62,8 +79,8 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
                 favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
                 true
             }
-            Log.d("Install", "Favourite")
             CurrentMusic.setCurrentFavouriteMusic(favourite)
+            sectionBar.update()
         }
     }
 
@@ -90,6 +107,7 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
             favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24_white)
         }
 
+
     }
 
     fun onClickArrow(view: View) {
@@ -103,14 +121,19 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
     }
 
     private class SectionsPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm!!) {
+        private var favourite: MusicParentListFragment = FavouriteListFragment()
+        private var musicList: MusicParentListFragment = MusicListFragment()
+
 
         override fun getCount() = 2
-        override fun getItem(position: Int) =
-            when (position) {
-                0 -> MusicListFragment()
-                else -> FavouriteListFragment()
+        override fun getItem(position: Int) = when (position) {
+            0 -> {
+                musicList
             }
-
+            else -> {
+                favourite
+            }
+        }
         override fun getPageTitle(position: Int): CharSequence? {
             when (position) {
                 0 -> return "Альбом"
@@ -118,7 +141,11 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
             }
             return super.getPageTitle(position)
         }
+        fun update() {
+            (favourite as FavouriteListFragment).update()
+        }
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         Log.d("Destroyed", "true")

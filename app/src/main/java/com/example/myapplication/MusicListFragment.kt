@@ -14,12 +14,10 @@ open class MusicListFragment : MusicParentListFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
-        if (listAdapter == null) {
-            val names = Array(CurrentMusic.size()){CurrentMusic.namesOfMusics[it]}
+        val names = Array(CurrentMusic.size()){CurrentMusic.namesOfMusics[it]}
 
-            val adapter = ArrayAdapter(inflater.context, R.layout.list_component, R.id.name_music, names)
-            listAdapter = adapter
-        }
+        val adapter = ArrayAdapter(inflater.context, R.layout.list_component, R.id.name_music, names)
+        listAdapter = adapter
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
