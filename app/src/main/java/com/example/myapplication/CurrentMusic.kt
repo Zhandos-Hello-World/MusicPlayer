@@ -204,6 +204,11 @@ object CurrentMusic {
     //for get data for music list. It will be worked when program is going to run
     @JvmStatic
     fun init(context: Context) {
+        namesOfMusics.clear()
+        raws.clear()
+        rawsFavourite.clear()
+        favourite.clear()
+        favouriteMusicList.clear()
         val music = MusicDataBaseHelper(context)
         try {
             val db = music.readableDatabase

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -148,8 +147,6 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
 
 
     override fun onSaveInstanceState(outState: Bundle) {
-        Log.d("Destroyed", "true")
-        Toast.makeText(this, "hELLO", Toast.LENGTH_LONG).show()
         CurrentMusic.save(this)
         super.onSaveInstanceState(outState)
     }
