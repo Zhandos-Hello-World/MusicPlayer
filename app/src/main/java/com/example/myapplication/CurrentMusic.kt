@@ -35,6 +35,7 @@ object CurrentMusic {
             }
             return field
         }
+    private var currentNameMusic = ""
     var media: MediaPlayer? = null
     var favouritePage = false
     @JvmStatic
@@ -59,15 +60,7 @@ object CurrentMusic {
     @JvmStatic
     fun currentNameOfMusic() : String {
         Log.d("Favourite page ?", favouritePage.toString())
-        return if (favouritePage) {
-            if (id in favouriteMusicList.indices)
-                favouriteMusicList[id]
-            else
-                "NULL"
-        }
-        else {
-            namesOfMusics[id]
-        }
+        return currentNameMusic
     }
 
     @JvmStatic
@@ -121,9 +114,11 @@ object CurrentMusic {
         //Initializing media and connect next music if current is ended
         if (!favouritePage) {
             media = MediaPlayer.create(context, raws[id])
+            currentNameMusic = namesOfMusics[id]
         }
         else {
             media = MediaPlayer.create(context, rawsFavourite[id])
+            currentNameMusic = favouriteMusicList[id]
         }
         media!!.setOnCompletionListener{
             if (favouritePage) {
@@ -131,6 +126,7 @@ object CurrentMusic {
             }
             else {
                 media = MediaPlayer.create(context, raws[++id])
+                currentNameMusic = namesOfMusics[id]
                 media?.start()
                 subject?.setUserData(namesOfMusics[id], id)
                 subject?.notifyObserver()

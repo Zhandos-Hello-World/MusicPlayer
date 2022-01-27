@@ -81,6 +81,7 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
             CurrentMusic.setCurrentFavouriteMusic(favourite)
             sectionBar.update()
         }
+
     }
 
     override fun onStart() {
@@ -120,9 +121,13 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
     }
 
     private class SectionsPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm!!) {
-        private var favourite: MusicParentListFragment = FavouriteListFragment()
+        private var favourite: FavouriteListFragment = FavouriteListFragment()
         private var musicList: MusicParentListFragment = MusicListFragment()
 
+        init {
+            favourite = FavouriteListFragment()
+            musicList = MusicListFragment()
+        }
 
         override fun getCount() = 2
         override fun getItem(position: Int) = when (position) {
@@ -141,7 +146,7 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
             return super.getPageTitle(position)
         }
         fun update() {
-            (favourite as FavouriteListFragment).update()
+            favourite.update()
         }
     }
 
