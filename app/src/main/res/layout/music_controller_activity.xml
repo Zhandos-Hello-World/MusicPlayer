@@ -21,7 +21,7 @@
             android:id="@+id/banner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="20dp"
             android:padding="32dp"
             android:adjustViewBounds="true"
             android:src="@drawable/disk"
@@ -38,7 +38,8 @@
             app:layout_constraintTop_toBottomOf="@id/banner"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="44dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,17 +58,16 @@
             app:layout_constraintEnd_toEndOf="@id/banner"
             app:layout_constraintTop_toBottomOf="@id/current"
             android:layout_marginTop="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:outlineAmbientShadowColor="@color/white"
-            android:outlineSpotShadowColor="@color/white"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:theme="@style/MySeekBar"
             />
 
         <LinearLayout
             android:id="@+id/controller"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="@id/banner"
             app:layout_constraintStart_toStartOf="@id/banner"
@@ -75,23 +75,23 @@
 
             <ImageButton
                 android:id="@+id/previous"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_baseline_skip_previous_24" />
 
             <ImageButton
                 android:id="@+id/play"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_baseline_play_arrow_24_white" />
 
 
             <ImageButton
                 android:id="@+id/next"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@drawable/ic_baseline_skip_next_24_white" />
 
             <TextView
@@ -103,6 +103,8 @@
         android:id="@+id/cycleFavourite"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/ic_baseline_toggle_off_24"
         android:tooltipText="Favourite"
         android:layout_gravity="end"
