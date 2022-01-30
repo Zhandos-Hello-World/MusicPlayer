@@ -9,17 +9,14 @@ import android.widget.ArrayAdapter
 
 open class MusicListFragment : MusicParentListFragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
 
-        val names = Array(CurrentMusic.size()){CurrentMusic.namesOfMusics[it]}
-
-        val adapter = ArrayAdapter(inflater.context, R.layout.list_component, R.id.name_music, names)
+        val adapter = ArrayAdapter(inflater.context, R.layout.list_component,
+            R.id.name_music, CurrentMusic.getMusics())
         listAdapter = adapter
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
-
 }

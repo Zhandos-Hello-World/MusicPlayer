@@ -2,7 +2,6 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
@@ -10,11 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.google.android.material.tabs.TabLayout
 
 
-class ListMusicController : AppCompatActivity(), MusicParentListFragment.Companion.Listener, RepositoryObserver {
+class ListMusicController : AppCompatActivity(),
+    MusicParentListFragment.Companion.Listener,
+    RepositoryObserver {
     private var favourite_btn: ImageButton? = null
     private var play_btn:ImageButton? = null
     private var name_music_current: TextView? = null
@@ -37,17 +37,14 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
         val tabLayout = findViewById<TabLayout>(R.id.tabs)
         tabLayout.setupWithViewPager(pager)
 
-        pager.addOnPageChangeListener(object : OnPageChangeListener {
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                Log.d("onPageSelected1", "true")
-                Log.d("onPageSelected1", position.toString())
-                CurrentMusic.favouritePage = position == 1
+                positionOffsetPixels: Int) {
+                CurrentMusic.setFavoritePage(position==1)
+                favourite_btn?.isClickable = position != 1
             }
-
             override fun onPageSelected(position: Int) {
             }
             override fun onPageScrollStateChanged(state: Int) {
@@ -78,7 +75,7 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
                 favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
                 true
             }
-            CurrentMusic.setCurrentFavouriteMusic(favourite)
+            CurrentMusic.setFavourite(favourite)
             sectionBar.update()
         }
 
@@ -96,9 +93,9 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
         else {
             play_btn?.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24_white)
         }
-        name_music_current?.text = CurrentMusic.currentNameOfMusic()
+        name_music_current?.text = CurrentMusic.currentNameMusic
 
-        favourite = CurrentMusic.currentIsFavouriteOfMusic()
+        favourite = CurrentMusic.isFavourite()
 
         if (favourite) {
             favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_24_red)
@@ -106,8 +103,6 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
         else {
             favourite_btn?.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24_white)
         }
-
-
     }
 
     fun onClickArrow(view: View) {
@@ -115,6 +110,7 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
     }
 
     override fun selected(id: Int) {
+        CurrentMusic.setFavouriteOption(false)
         CurrentMusic.id = id
         CurrentMusic.startMusic(this, null)
         current()
@@ -157,6 +153,6 @@ class ListMusicController : AppCompatActivity(), MusicParentListFragment.Compani
     }
 
     override fun onUserDataChanged(music_name: String?, music_id: Int) {
-        name_music_current?.text = CurrentMusic.namesOfMusics[music_id]
+        name_music_current?.text = CurrentMusic.currentNameMusic
     }
 }

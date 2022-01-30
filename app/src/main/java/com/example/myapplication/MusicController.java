@@ -15,6 +15,7 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
     private ImageButton previous;
     private ImageButton play;
     private ImageButton next;
+    private ImageButton cycleButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,14 +28,14 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
         previous = findViewById(R.id.previous);
         play = findViewById(R.id.play);
         next = findViewById(R.id.next);
+        cycleButton = findViewById(R.id.cycleFavourite);
 
-
-        current.setText(CurrentMusic.currentNameOfMusic());
+        current.setText(CurrentMusic.getCurrentNameMusic());
 
         previous.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() - 1);
             CurrentMusic.startMusic(this, seekBar);
-            current.setText(CurrentMusic.currentNameOfMusic());
+            current.setText(CurrentMusic.getCurrentNameMusic());
             if (!CurrentMusic.initialized()) {
                 CurrentMusic.startMusic(this, seekBar);
             }
@@ -47,7 +48,7 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
         next.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() + 1);
             CurrentMusic.startMusic(this, seekBar);
-            current.setText(CurrentMusic.currentNameOfMusic() );
+            current.setText(CurrentMusic.getCurrentNameMusic());
             if (!CurrentMusic.initialized()) {
                 CurrentMusic.startMusic(this, seekBar);
             }
@@ -71,6 +72,17 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
                     play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
                     CurrentMusic.play();
                 }
+            }
+        });
+
+        cycleButton.setOnClickListener(key -> {
+            if (CurrentMusic.isFavouriteOption()) {
+                cycleButton.setBackgroundResource(R.drawable.ic_baseline_toggle_off_24);
+                CurrentMusic.setFavouriteOption(false);
+            }
+            else {
+                cycleButton.setBackgroundResource(R.drawable.ic_baseline_toggle_on_24);
+                CurrentMusic.setFavouriteOption(true);
             }
         });
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -97,6 +109,13 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
                 play.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24_white);
             }
         }
+        if (CurrentMusic.isFavouriteOption()) {
+            cycleButton.setBackgroundResource(R.drawable.ic_baseline_toggle_on_24);
+        }
+        else {
+            cycleButton.setBackgroundResource(R.drawable.ic_baseline_toggle_off_24);
+        }
+
         super.onStart();
     }
     @Override
@@ -118,7 +137,6 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
 
     @Override
     public void onUserDataChanged(String music_name, int music_id) {
-        current.setText(CurrentMusic.currentNameOfMusic());
-
+        current.setText(CurrentMusic.getCurrentNameMusic());
     }
 }

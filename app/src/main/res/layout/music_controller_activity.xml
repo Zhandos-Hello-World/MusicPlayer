@@ -94,6 +94,14 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/cycleFavourite"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_baseline_toggle_off_24"
+        android:tooltipText="Favourite"
+        android:layout_gravity="end"
+        />
 </LinearLayout>
 
 

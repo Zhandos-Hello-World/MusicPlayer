@@ -1,100 +1,22 @@
 package com.example.myapplication
 
-import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteException
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.SeekBar
-import android.widget.Toast
-
 
 object CurrentMusic {
-    val namesOfMusics = mutableListOf<String>()
-    private val raws = mutableListOf<Int>()
-    private var rawsFavourite = mutableListOf<Int>()
-    get() {
-        field.clear()
-        for (i in raws.indices) {
-            if (favourite[i]) {
-                field.add(raws[i])
-            }
-        }
-        return field
-    }
-    private val favourite = mutableListOf<Boolean>()
-    val favouriteMusicList = mutableListOf<String>()
-        get() {
-            field.clear()
-            for (i in namesOfMusics.indices) {
-                if (favourite[i]) {
-                    field.add(namesOfMusics[i])
-                }
-            }
-            return field
-        }
-    private var currentNameMusic = ""
-    var media: MediaPlayer? = null
-    var favouritePage = false
+    @JvmStatic
+    var currentNameMusic = ""
+    private var mList:MusicList? = null
+    private var media: MediaPlayer? = null
     @JvmStatic
     var id: Int = 0
-    set (value) {
-        field = when {
-            value < 0 -> {
-                namesOfMusics.size - 1
-            }
-            value >= raws.size - 1 -> {
-                0
-            }
-            else -> {
-                value
-            }
-        }
-    }
+
     private var task: Runnable? = null
     private val handler = Handler(Looper.myLooper()!!)
     private var subject: MusicObservableDataRepository? = null
-
-    @JvmStatic
-    fun currentNameOfMusic() : String {
-        Log.d("Favourite page ?", favouritePage.toString())
-        return currentNameMusic
-    }
-
-    @JvmStatic
-    fun currentIsFavouriteOfMusic(): Boolean {
-        return if (favouritePage) {
-            true
-        } else {
-            if (id in favourite.indices)
-                favourite[id]
-            else
-                false
-        }
-    }
-
-
-
-    @JvmStatic
-    fun setCurrentFavouriteMusic(newFavourite: Boolean) {
-        if (favouritePage) {
-            var temp = 0
-            for (i in favourite.indices) {
-                if (favourite[i]) {
-                    if (temp == id) {
-                        favourite[temp] = false
-                        break
-                    }
-                    temp++
-                }
-            }
-        }
-        else {
-            favourite[id] = newFavourite
-        }
-    }
 
     @JvmStatic
     fun startMusic(context: Context, seekbar: SeekBar? = null) {
@@ -112,30 +34,31 @@ object CurrentMusic {
         }
 
         //Initializing media and connect next music if current is ended
-        if (!favouritePage) {
-            media = MediaPlayer.create(context, raws[id])
-            currentNameMusic = namesOfMusics[id]
-        }
-        else {
-            media = MediaPlayer.create(context, rawsFavourite[id])
-            currentNameMusic = favouriteMusicList[id]
-        }
-        media!!.setOnCompletionListener{
-            if (favouritePage) {
-                //Todo
-            }
-            else {
-                media = MediaPlayer.create(context, raws[++id])
-                currentNameMusic = namesOfMusics[id]
-                media?.start()
-                subject?.setUserData(namesOfMusics[id], id)
-                subject?.notifyObserver()
-            }
-        }
-
+        media = MediaPlayer.create(context, mList?.getResIDCurrentMusic(id)!!)
         //start
         media?.start()
+        currentNameMusic = mList?.getNameCurrentMusic(id)!!
 
+        media!!.setOnCompletionListener {
+            id++
+            if (mList?.isFavourite!!) {
+                if (id >= mList!!.nameOfMusicsFavourite.size) {
+                    id = 0
+                }
+            }
+            else {
+                if (id >= mList!!.nameOfMusics.size) {
+                    id = 0
+                }
+            }
+            media = MediaPlayer.create(context, mList?.getResIDCurrentMusic(id)!!)
+            currentNameMusic = mList?.getNameCurrentMusic(id)!!
+            media?.start()
+
+            subject?.setUserData(mList?.getNameCurrentMusic(id)!!, id)
+            subject?.notifyObserver()
+
+        }
         //if layout has seekbar
         if (seekbar != null) {
             initializeSeekBar(seekbar)
@@ -193,57 +116,47 @@ object CurrentMusic {
             media?.start()
         }
     }
+
     @JvmStatic
-    fun size() = namesOfMusics.size
+    fun getMusics() = mList?.nameOfMusics ?: mutableListOf()
 
+    @JvmStatic
+    fun getFavouriteMusic() = mList?.nameOfMusicsFavourite ?: mutableListOf()
 
-    //for get data for music list. It will be worked when program is going to run
     @JvmStatic
     fun init(context: Context) {
-        namesOfMusics.clear()
-        raws.clear()
-        rawsFavourite.clear()
-        favourite.clear()
-        favouriteMusicList.clear()
-        val music = MusicDataBaseHelper(context)
-        try {
-            val db = music.readableDatabase
-            val cursor = db.query("MUSICS", arrayOf("_id", "MUSIC_NAME", "MUSIC_RES_ID", "FAVOURITE"),
-            null, null, null, null, null)
-
-            if (cursor.moveToFirst()) {
-                namesOfMusics.add(cursor.getString(1));
-                raws.add(cursor.getInt(2))
-                favourite.add(cursor.getInt(3) == 1)
-            }
-            while (cursor.moveToNext()) {
-                namesOfMusics.add(cursor.getString(1));
-                raws.add(cursor.getInt(2))
-                favourite.add(cursor.getInt(3) == 1)            }
-
-            db.close()
-            cursor.close()
-        } catch (ex: SQLiteException) {
-            Toast.makeText(context, "Unavailable Database", Toast.LENGTH_LONG).show()
+        if (mList == null) {
+            mList = MusicList(context)
+        }
+    }
+    @JvmStatic
+    fun setFavourite(fav: Boolean) {
+        if (fav) {
+            mList?.addFavourite(id)
+        }
+        else {
+            mList?.removeFavourite(id)
         }
     }
 
-    //it's when will be worked when activity is destroyed
+    @JvmStatic
+    fun setFavouriteOption(fav: Boolean) {
+        mList?.isFavourite = fav
+    }
+    @JvmStatic
+    fun isFavouriteOption(): Boolean {
+        return mList?.isFavourite?:false
+    }
+
+    @JvmStatic
+    fun isFavourite() = mList?.isFavourite(id) ?: false
+
     @JvmStatic
     fun save(context: Context) {
-        val music = MusicDataBaseHelper(context)
-        try {
-            val db = music.readableDatabase
-            val value = ContentValues()
+        mList?.save(context)
+    }
 
-            for (i in namesOfMusics.indices) {
-                value.put("FAVOURITE", if (favourite[i]) 1 else 0)
-                db.update("MUSICS", value, "MUSIC_NAME = ?", arrayOf(namesOfMusics[i]))
-            }
-
-            db.close()
-        } catch (ex: SQLiteException) {
-            Toast.makeText(context, "Unavailable Database", Toast.LENGTH_LONG).show()
-        }
+    fun setFavoritePage(page: Boolean) {
+        mList?.favouritePage = page
     }
 }
