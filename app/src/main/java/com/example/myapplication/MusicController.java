@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -85,6 +86,13 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
                 CurrentMusic.setFavouriteOption(true);
             }
         });
+
+
+        current.setSingleLine();
+        current.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        current.setMarqueeRepeatLimit(-1);
+        current.setSelected(true);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
