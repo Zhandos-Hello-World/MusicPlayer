@@ -137,6 +137,7 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

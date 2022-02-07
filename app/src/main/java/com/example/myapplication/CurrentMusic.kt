@@ -14,7 +14,7 @@ object CurrentMusic {
     @JvmStatic
     var id: Int = 0
     set (value) {
-        field = if (isFavourite()) {
+        field = if (isFavouriteOption()) {
             val max = mList?.nameOfMusicsFavourite?.size?:-1
             if (value !in 0 until max) {
                 0
