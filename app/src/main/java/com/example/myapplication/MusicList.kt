@@ -86,7 +86,7 @@ class MusicList(context: Context) {
             musicsID[id]
     }
 
-    private fun check(id: Int) = id < nameOfMusicsFavourite.size
+    private fun check(id: Int) = id in 0 until nameOfMusicsFavourite.size
 
     fun isFavourite(id: Int): Boolean {
         if (favouritePage) {

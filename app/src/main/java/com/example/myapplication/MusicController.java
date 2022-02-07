@@ -1,14 +1,20 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.util.Objects;
 
 public class MusicController extends AppCompatActivity implements RepositoryObserver {
     private TextView current;
@@ -35,28 +41,58 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
 
         previous.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() - 1);
-            CurrentMusic.startMusic(this, seekBar);
-            current.setText(CurrentMusic.getCurrentNameMusic());
-            if (!CurrentMusic.initialized()) {
+            if (!CurrentMusic.isFavouriteOption()) {
                 CurrentMusic.startMusic(this, seekBar);
+                current.setText(CurrentMusic.getCurrentNameMusic());
+                if (!CurrentMusic.initialized()) {
+                    CurrentMusic.startMusic(this, seekBar);
+                }
+                else {
+                    CurrentMusic.play();
+                }
+                play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
             }
             else {
-                CurrentMusic.play();
+                if (!CurrentMusic.inFavourite()) {
+                    CurrentMusic.setId(0);
+                }
+                CurrentMusic.startMusic(this, seekBar);
+                current.setText(CurrentMusic.getCurrentNameMusic());
+                if (!CurrentMusic.initialized()) {
+                    CurrentMusic.startMusic(this, seekBar);
+                }
+                else {
+                    CurrentMusic.play();
+                }
             }
-            play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
         });
 
         next.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() + 1);
-            CurrentMusic.startMusic(this, seekBar);
-            current.setText(CurrentMusic.getCurrentNameMusic());
-            if (!CurrentMusic.initialized()) {
+            if (!CurrentMusic.isFavouriteOption()) {
                 CurrentMusic.startMusic(this, seekBar);
+                current.setText(CurrentMusic.getCurrentNameMusic());
+                if (!CurrentMusic.initialized()) {
+                    CurrentMusic.startMusic(this, seekBar);
+                }
+                else {
+                    CurrentMusic.play();
+                }
+                play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
             }
             else {
-                CurrentMusic.play();
+                if (!CurrentMusic.inFavourite()) {
+                    CurrentMusic.setId(0);
+                }
+                CurrentMusic.startMusic(this, seekBar);
+                current.setText(CurrentMusic.getCurrentNameMusic());
+                if (!CurrentMusic.initialized()) {
+                    CurrentMusic.startMusic(this, seekBar);
+                }
+                else {
+                    CurrentMusic.play();
+                }
             }
-            play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
         });
 
         play.setOnClickListener(key -> {
@@ -86,6 +122,12 @@ public class MusicController extends AppCompatActivity implements RepositoryObse
                 CurrentMusic.setFavouriteOption(true);
             }
         });
+        if (CurrentMusic.favouriteIsEmpty()) {
+            cycleButton.setVisibility(View.GONE);
+        }
+        else {
+            cycleButton.setVisibility(View.VISIBLE);
+        }
 
 
         current.setSingleLine();

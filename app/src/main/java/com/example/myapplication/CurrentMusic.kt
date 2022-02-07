@@ -13,6 +13,22 @@ object CurrentMusic {
     private var media: MediaPlayer? = null
     @JvmStatic
     var id: Int = 0
+    set (value) {
+        field = if (isFavourite()) {
+            val max = mList?.nameOfMusicsFavourite?.size?:-1
+            if (value !in 0 until max) {
+                0
+            } else {
+                value
+            }
+        } else {
+            if (value in 0 until (mList?.nameOfMusics?.size?:1)) {
+                value
+            } else {
+                0
+            }
+        }
+    }
 
     private var task: Runnable? = null
     private val handler = Handler(Looper.myLooper()!!)
@@ -147,6 +163,16 @@ object CurrentMusic {
     fun isFavouriteOption(): Boolean {
         return mList?.isFavourite?:false
     }
+    @JvmStatic
+    fun inFavourite(): Boolean {
+        val max = mList?.nameOfMusicsFavourite?.size?:-1
+        if (max > 0) {
+            return id in 0 until max
+        }
+        return false
+    }
+    @JvmStatic
+    fun favouriteIsEmpty() = mList?.nameOfMusicsFavourite?.size == 0
 
     @JvmStatic
     fun isFavourite() = mList?.isFavourite(id) ?: false
