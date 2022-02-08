@@ -37,58 +37,38 @@ public class MusicControllerActivity extends AppCompatActivity implements Reposi
 
         previous.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() - 1);
-            if (!CurrentMusic.isFavouriteOption()) {
-                CurrentMusic.startMusic(this, seekBar);
-                current.setText(CurrentMusic.getCurrentNameMusic());
-                if (!CurrentMusic.initialized()) {
-                    CurrentMusic.startMusic(this, seekBar);
-                }
-                else {
-                    CurrentMusic.play();
-                }
-                play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
-            }
-            else {
+            if (CurrentMusic.isFavouriteOption()) {
                 if (!CurrentMusic.inFavourite()) {
                     CurrentMusic.setId(0);
                 }
-                CurrentMusic.startMusic(this, seekBar);
-                current.setText(CurrentMusic.getCurrentNameMusic());
-                if (!CurrentMusic.initialized()) {
-                    CurrentMusic.startMusic(this, seekBar);
-                }
-                else {
-                    CurrentMusic.play();
-                }
             }
+            CurrentMusic.startMusic(this, seekBar);
+            current.setText(CurrentMusic.getCurrentNameMusic());
+            if (!CurrentMusic.initialized()) {
+                CurrentMusic.startMusic(this, seekBar);
+            }
+            else {
+                CurrentMusic.play();
+            }
+            play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
         });
 
         next.setOnClickListener(key -> {
             CurrentMusic.setId(CurrentMusic.getId() + 1);
-            if (!CurrentMusic.isFavouriteOption()) {
-                CurrentMusic.startMusic(this, seekBar);
-                current.setText(CurrentMusic.getCurrentNameMusic());
-                if (!CurrentMusic.initialized()) {
-                    CurrentMusic.startMusic(this, seekBar);
-                }
-                else {
-                    CurrentMusic.play();
-                }
-                play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
-            }
-            else {
+            if (CurrentMusic.isFavouriteOption()) {
                 if (!CurrentMusic.inFavourite()) {
                     CurrentMusic.setId(0);
                 }
-                CurrentMusic.startMusic(this, seekBar);
-                current.setText(CurrentMusic.getCurrentNameMusic());
-                if (!CurrentMusic.initialized()) {
-                    CurrentMusic.startMusic(this, seekBar);
-                }
-                else {
-                    CurrentMusic.play();
-                }
             }
+            CurrentMusic.startMusic(this, seekBar);
+            current.setText(CurrentMusic.getCurrentNameMusic());
+            if (!CurrentMusic.initialized()) {
+                CurrentMusic.startMusic(this, seekBar);
+            }
+            else {
+                CurrentMusic.play();
+            }
+            play.setBackgroundResource(R.drawable.ic_sharp_pause_circle_outline_24_white);
         });
 
         play.setOnClickListener(key -> {
