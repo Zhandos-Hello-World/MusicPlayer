@@ -16,8 +16,9 @@ public class MusicDataBaseHelper extends SQLiteOpenHelper {
         "Звезда по имени Солнце", "Это не любовь", "Музыка волн", "Бездельник",
         "Мы хотим танцевать", "Пачка сигарет", "Сказка", "Война", "Дальше действовать будем мы",
         "Мама анархия", "Прохожий", "Время есть а денег нет", "Троллейбус", "Невесёлая песня",
-        "Когда твоя девушка больна", "Электричка", "Стук", "Нам с тобой", "Бошетунмай",
-        "Следи за собой", "Скоро кончится лето"
+        "Когда твоя девушка больна", "Электричка", "Нам с тобой", "Бошетунмай",
+        "Следи за собой", "Сосны на морском берегу", "Хочу перемен", "Красно-жёлтые дни", "Апрель",
+            "Закрой за мной дверь, я ухожу", "Последний герой"
     };
     public static int[] music_id = {
             R.raw.music1, R.raw.music2, R.raw.music3,
@@ -30,7 +31,8 @@ public class MusicDataBaseHelper extends SQLiteOpenHelper {
             R.raw.music21, R.raw.music22, R.raw.music23,
             R.raw.music24, R.raw.music25, R.raw.music26,
             R.raw.music27, R.raw.music28, R.raw.music29,
-            R.raw.music30};
+            R.raw.music30, R.raw.music31, R.raw.music32,
+            R.raw.music33, R.raw.music34};
 
     public static int size() {
         return music_id.length;

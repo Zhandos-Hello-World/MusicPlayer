@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="teal_200">#FF000000</color>
-    <color name="teal_700">#FF000000</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
     <color name="black">#FF000000</color>
 
+    <color name="maroon">#3D0000</color>
+    <color name="rhodymenia">#950101</color>
+    <color name="red">#FF0000</color>
+    <color name="ttt">#1F0F10</color>
 
 
-    <color name="startColorW">#FF000000</color>
-    <color name="startColorD">#FF000000</color>
+    <color name="gray">#D6D6D6</color>
+    <color name="startColorW">#4188FF</color>
+    <color name="startColorD">#2926CE</color>
 
-    <color name="varStartW">#FF000000</color>
-    <color name="varStartD">#FF000000</color>
+    <color name="varStartW">#4188FF</color>
+    <color name="varStartD">#2D48CE</color>
     <color name="white">#FFFFFF</color>
 
     <color name="selected">#B20217</color>
-    <color name="gray">#181817</color>
 </resources>

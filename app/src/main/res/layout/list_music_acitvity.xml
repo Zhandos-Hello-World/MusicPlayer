@@ -8,8 +8,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -25,15 +24,15 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/startColorD">
+        android:layout_height="wrap_content">
 
         <androidx.viewpager.widget.ViewPager
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:divider="@null"
-            android:listSelector="@color/selected" />
+            style="@style/FrameLayout"
+            />
 
         <FrameLayout
             android:id="@+id/bottom_controller"
@@ -41,6 +40,7 @@
             android:layout_width="match_parent"
             android:clickable="true"
             android:layout_gravity="bottom"
+            style="@style/Controller"
             >
             <LinearLayout
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -89,7 +89,6 @@
                             android:layout_marginBottom="16dp"
                             android:layout_marginTop="0dp"
                             android:text="Группа крови"
-                            android:textColor="@color/white"
                             android:textSize="16sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -103,7 +102,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="16dp"
                             android:text="Виктор Цой"
-                            android:textColor="@color/white"
                             android:textSize="12sp"
 
                             app:layout_constraintStart_toStartOf="parent"
