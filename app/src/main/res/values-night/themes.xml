@@ -16,4 +16,8 @@
     <style name="Controller" parent="Theme.MyApplication">
         <item name="android:background">@color/black</item>
     </style>
+    <style name="Picture">
+        <item name="android:src">@drawable/disk</item>
+    </style>
+
 </resources>

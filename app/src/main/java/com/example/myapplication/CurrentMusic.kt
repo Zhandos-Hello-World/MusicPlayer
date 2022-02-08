@@ -51,10 +51,17 @@ object CurrentMusic {
 
         //Initializing media and connect next music if current is ended
         media = MediaPlayer.create(context, mList?.getResIDCurrentMusic(id)!!)
+        actionAfterComplete(context)
         //start
         media?.start()
         currentNameMusic = mList?.getNameCurrentMusic(id)!!
 
+        //if layout has seekbar
+        if (seekbar != null) {
+            initializeSeekBar(seekbar)
+        }
+    }
+    private fun actionAfterComplete(context: Context) {
         media!!.setOnCompletionListener {
             id++
             if (mList?.isFavourite!!) {
@@ -67,17 +74,14 @@ object CurrentMusic {
                     id = 0
                 }
             }
+
             media = MediaPlayer.create(context, mList?.getResIDCurrentMusic(id)!!)
             currentNameMusic = mList?.getNameCurrentMusic(id)!!
             media?.start()
+            actionAfterComplete(context)
 
             subject?.setUserData(mList?.getNameCurrentMusic(id)!!, id)
             subject?.notifyObserver()
-
-        }
-        //if layout has seekbar
-        if (seekbar != null) {
-            initializeSeekBar(seekbar)
         }
     }
 

@@ -13,11 +13,7 @@
 
 
     <color name="gray">#D6D6D6</color>
-    <color name="startColorW">#4188FF</color>
-    <color name="startColorD">#2926CE</color>
-
-    <color name="varStartW">#4188FF</color>
-    <color name="varStartD">#2D48CE</color>
+    <color name="whiteDefaultColor">#A0B2B4</color>
     <color name="white">#FFFFFF</color>
 
     <color name="selected">#B20217</color>

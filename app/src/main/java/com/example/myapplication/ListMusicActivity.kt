@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.view.isGone
@@ -32,7 +33,7 @@ class ListMusicActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_music_acitvity)
         bottomController = findViewById(R.id.bottom_controller)
-        bottomController?.isGone = !CurrentMusic.initialized()
+        bottomController?.isGone = !CurrentMusic.isPlaying()
 
         CurrentMusic.init(this)
 
@@ -42,7 +43,7 @@ class ListMusicActivity : AppCompatActivity(),
 
         setSupportActionBar(findViewById(R.id.toolbar))
         val sectionBar = SectionsPagerAdapter(supportFragmentManager)
-        pager = findViewById<ViewPager>(R.id.pager)
+        pager = findViewById(R.id.pager)
         pager?.adapter = sectionBar
 
         val tabLayout = findViewById<TabLayout>(R.id.tabs)
@@ -87,7 +88,12 @@ class ListMusicActivity : AppCompatActivity(),
                 true
             }
             CurrentMusic.setFavourite(favourite)
-            sectionBar.update()
+            try {
+                sectionBar.update()
+            } catch (ex: IllegalStateException) {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                //Todo fix
+            }
         }
     }
     private fun createNotification() {
@@ -193,5 +199,8 @@ class ListMusicActivity : AppCompatActivity(),
 
     override fun onUserDataChanged(music_name: String?, music_id: Int) {
         name_music_current?.text = CurrentMusic.currentNameMusic
+    }
+    fun newIntent(view: View) {
+        startActivity(Intent(this, MusicControllerActivity::class.java))
     }
 }
