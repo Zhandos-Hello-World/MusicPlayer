@@ -95,6 +95,7 @@ class ListMusicActivity : AppCompatActivity(),
                 //Todo fix
             }
         }
+        createNotification()
     }
     private fun createNotification() {
 
@@ -191,6 +192,26 @@ class ListMusicActivity : AppCompatActivity(),
         }
     }
 
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        var notification = NotificationCompat.Builder(this, "Channel")
+            // Show controls on lock screen even when user hides sensitive content.
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setSmallIcon(R.drawable.ic_launcher_background)
+            // Add media control buttons that invoke intents in your media service
+            .addAction(R.drawable.ic_baseline_skip_previous_24, "Previous", null) // #0
+            .addAction(R.drawable.ic_sharp_pause_circle_outline_24_white, "Pause", null) // #1
+            .addAction(R.drawable.ic_baseline_skip_next_24_white, "Next", null) // #2
+            // Apply the media style template
+            .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
+                .setShowActionsInCompactView(1 /* #1: pause button \*/)
+               )
+            .setContentTitle("Wonderful music")
+            .setContentText("My Awesome Band")
+            .build()
+
+    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         CurrentMusic.save(this)

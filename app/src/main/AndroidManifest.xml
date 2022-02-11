@@ -28,5 +28,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ListMusicActivity" />
         </activity>
+        <activity
+            android:name=".CommentDeveloperActivity"
+            android:theme="@style/About">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MusicControllerActivity" />
+        </activity>
     </application>
 </manifest>

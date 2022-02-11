@@ -1,13 +1,16 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -114,6 +117,20 @@ public class MusicControllerActivity extends AppCompatActivity implements Reposi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //singer
+        if (item.getOrder() == 0) {
+
+        }
+        //comment for support
+        else {
+            startActivity(new Intent(this, CommentDeveloperActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:title="Settings"
-        android:icon="@drawable/ic_baseline_more_vert_24_white"
-        android:orderInCategory="1"
+        android:id="@+id/singer"
+        android:title="@string/AboutVictor"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        android:orderInCategory="0"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/comment"
+        android:title="@string/AboutDeveloper"
+        android:icon="@drawable/ic_round_comment_24"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom">
+    </item>
 </menu>

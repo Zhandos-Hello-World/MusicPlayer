@@ -16,6 +16,10 @@
     <style name="Controller" parent="Theme.MyApplication">
         <item name="android:background">@color/whiteDefaultColor</item>
     </style>
+    <style name="About" parent="Controller">
+        <item name="android:background">@color/whiteDefaultColor</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
     <style name="Picture">
         <item name="android:src">@drawable/white_disk</item>
     </style>

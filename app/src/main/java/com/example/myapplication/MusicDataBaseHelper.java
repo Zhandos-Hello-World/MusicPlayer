@@ -27,12 +27,12 @@ public class MusicDataBaseHelper extends SQLiteOpenHelper {
             R.raw.music10, R.raw.music11, R.raw.music12,
             R.raw.music13, R.raw.music14, R.raw.music15,
             R.raw.music16, R.raw.music17, R.raw.music18,
-            R.raw.music19, R.raw.music10, R.raw.music20,
-            R.raw.music21, R.raw.music22, R.raw.music23,
-            R.raw.music24, R.raw.music25, R.raw.music26,
-            R.raw.music27, R.raw.music28, R.raw.music29,
-            R.raw.music30, R.raw.music31, R.raw.music32,
-            R.raw.music33, R.raw.music34};
+            R.raw.music19, R.raw.music20, R.raw.music21,
+            R.raw.music22, R.raw.music23, R.raw.music24,
+            R.raw.music25, R.raw.music26, R.raw.music27,
+            R.raw.music28, R.raw.music29, R.raw.music30,
+            R.raw.music31, R.raw.music32, R.raw.music33,
+            R.raw.music34};
 
     public static int size() {
         return music_id.length;
